@@ -10,7 +10,7 @@ sidebar:
   # Profile information
   name: Dongol Cho
   tagline: SW Engineer at BAUM Design Systems, Korea
-  avatar: profile.png
+  avatar: 
 
   # Sidebar links
   email: dongol.cho.career@gmail.com
@@ -134,6 +134,10 @@ skills:
   toolset:
   - name: C++ (with gdb, gtest, perf, valgrind)
     level: 95%
+  - name: Code Profiling & Optimization
+    level: 90%
+  - name: Software Architecture & Design Patterns
+    level: 65%
   - name: Graphical User Interface (Qt, Qtest with C++)
     level: 60%
   - name: Python
