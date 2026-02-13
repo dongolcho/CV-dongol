@@ -9,8 +9,8 @@ sidebar:
 
   # Profile information
   name: Dongol Cho
-  tagline: SW Engineer at BAUM Design Systems, Korea
-  avatar: 
+  tagline: R&D Engineer at BAUM Design Systems, Korea
+  avatar: profile.jpg
 
   # Sidebar links
   email: dongol.cho.career@gmail.com
@@ -59,7 +59,7 @@ career-profile:
   summary: |
     EDA software engineer building and optimizing production analysis flows in C++11.
     Focus areas include power analysis, runtime/memory performance, maintainable architecture, and
-    debugging/testing (Valgrind, GoogleTest, QTest, Qt).
+    debugging/testing.
 
 education:
   title: Education
@@ -75,49 +75,22 @@ experiences:
     time: Jul 2023 – Present
     company: Baum Design Systems
     details: |
-      - Delivered >7× runtime speedup in a critical elaboration stage via lazy evaluation and caching.
-      - Reduced matching runtime by >90% (4h 38m → 25m 38s) by removing unnecessary allocations/copies and applying selective lazy evaluation.
-      - Improved core database efficiency: -13.5% memory and +12% runtime via data-structure redesign.
-      - Built simulation-driven logical inversion detection to improve analysis QoR and throughput; reduced overhead with time-window selection and bitset-based filtering.
-      - Implemented flexible custom power derating for multi-scenario analysis using hierarchical inheritance and override precedence.
-      - <TODO: Add concrete “how” details for runtime optimization (profiling evidence, algorithmic complexity deltas, cache key/invalidation strategy).>
-
-projects:
-  title: Projects
-  intro: >
-    Selected engineering highlights. Public write-ups will be added as they become available.
-  assignments:
-  - title: Performance Engineering for EDA Flows
-    link: ""
-    tagline: "Profiling-driven runtime improvements, caching strategies, and allocation reduction in high-frequency paths. <TODO: Add a public summary + representative before/after metrics.>"
-  - title: Memory Footprint Optimization for Large Design Inputs
-    link: ""
-    tagline: "Data-structure redesign and selective parsing to reduce peak memory without breaking compatibility. <TODO: Add a short technical note.>"
-  - title: Simulation-Driven Logic Inversion Identification
-    link: ""
-    tagline: "Generic inversion detection to improve analysis QoR; optimized overhead using time-window selection and bitset filtering. <TODO: Add a demo/pseudocode.>"
-
-publications:
-  title: Publications
-  intro:
-  papers:
-  - title: "<TODO: Paper Title>"
-    link: ""
-    authors: ">"
-    conference: ""
+      - Developed EDA tools for power analysis in digital designs.
+      - Improved runtime and memory performance of analysis flows through profiling and algorithmic enhancements.
+      - Collaborated closely with application engineers to define, prioritize, and deliver key product features, ensuring alignment with customer needs and strategic objectives.
+  - role: Engineering Intern
+    time: Dec 2022 – Feb 2023
+  - role: Analog Design Intern
+    time: March 2022 – Aug 2022
 
 patents:
   title: Patents
   intro: |
     <TODO: Add a brief description about your patents here.>
   items:
-  - title: "<TODO: Patent Application Title>"
-    status: "In preparation / Filed / Published"
-    year: "<TODO: Year>"
-    link: ""
-  - title: "<TODO: Patent Application Title>"
-    status: "In preparation / Filed / Published"
-    year: "<TODO: Year>"
+  - title: "A Simulation method for thermal simulation for an integrated circuit using deep-learning and method for the same"
+    status: "Published"
+    Registration Date: "2025-07-07"
     link: ""
 
 awards:
@@ -132,12 +105,10 @@ awards:
 skills:
   title: Skills &amp; Proficiency
   toolset:
-  - name: C++ (with gdb, gtest, perf, valgrind)
+  - name: C++ (OOP, Optimization, GTEST, valgrind, GDB)
     level: 95%
-  - name: Code Profiling & Optimization
-    level: 90%
-  - name: Software Architecture & Design Patterns
-    level: 65%
+  - name: Problem solving & Communication
+    level: 80%
   - name: Graphical User Interface (Qt, Qtest with C++)
     level: 60%
   - name: Python
@@ -146,8 +117,6 @@ skills:
     level: 50%
   - name: Linux
     level: 80%
-  - name: Git
-    level: 90%
 
 footer: >
   Designed with <i class="fas fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank" rel="nofollow">Xiaoying Riley</a>
