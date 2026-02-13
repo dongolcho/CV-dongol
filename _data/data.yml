@@ -80,13 +80,13 @@ experiences:
       - Collaborated closely with application engineers to define, prioritize, and deliver key product features, ensuring alignment with customer needs and strategic objectives.
   - role: Engineering Intern
     time: Dec 2022 – Feb 2023
+    company: Baum Design Systems
   - role: Analog Design Intern
     time: March 2022 – Aug 2022
+    company: Samsung Electronics (Memory Division)
 
 patents:
   title: Patents
-  intro: |
-    <TODO: Add a brief description about your patents here.>
   items:
   - title: "A Simulation method for thermal simulation for an integrated circuit using deep-learning and method for the same"
     status: "Published"
