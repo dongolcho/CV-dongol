@@ -1,0 +1,43 @@
+{% assign patents = site.data.data.patents %}
+{% if patents %}
+<section class="section patents-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-lightbulb fa-stack-1x fa-inverse"></i>
+    </span>
+    {{ patents.title }}
+  </h2>
+
+  {% if patents.intro %}
+  <div class="intro">
+    {{ patents.intro | markdownify }}
+  </div><!--//intro-->
+  {% endif %}
+
+  {% for patent in patents.items %}
+  <div class="item">
+    <div class="patent-title">
+      {% if patent.link %}
+        <strong><a href="{{ patent.link }}" target="_blank" rel="noopener noreferrer">{{ patent.title }}</a></strong>
+      {% else %}
+        <strong>{{ patent.title }}</strong>
+      {% endif %}
+    </div>
+    <div class="patent-meta">
+      {% if patent.status %}
+        <span class="patent-status">{{ patent.status }}</span>
+      {% endif %}
+      {% if patent['Patent Number'] %}
+        <span class="patent-number"> | Patent No. {{ patent['Patent Number'] }}</span>
+      {% endif %}
+      {% if patent['Registration Date'] %}
+        <span class="patent-date"> | Registration Date : {{ patent['Registration Date'] }}</span>
+      {% endif %}
+    </div>
+  </div><!--//item-->
+  {% endfor %}
+
+</section><!--//section-->
+{% endif %}
