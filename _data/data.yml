@@ -47,7 +47,7 @@ sidebar:
     info:
     - item: Electrical Design Automation (EDA)
       link:
-    - item: C++ architecture
+    - item: Low power design
       link:
     - item: Performance engineering (runtime/memory)
       link:
