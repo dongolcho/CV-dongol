@@ -17,6 +17,10 @@
     <i class="fas fa-file-pdf"></i>PDF
   </button>
 
+  <button onclick="downloadMarkdownResume()" class="markdown-button d-print-none" id="markdownButton">
+    <i class="fas fa-file-lines"></i>Markdown
+  </button>
+
   <div class="wrapper">
     {% include sidebar.html %}
 
@@ -27,6 +31,7 @@
 
   {% include footer.html %}
 
+  <script id="cv-data" type="application/json">{{ site.data.data | jsonify }}</script>
   {% include scripts.html %}
   <script src="{{ site.baseurl }}/assets/js/pdf-generator.js"></script>
 </body>
