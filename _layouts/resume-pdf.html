@@ -44,12 +44,12 @@
         width: 210mm;
         min-height: 297mm;
         margin: 0 auto;
-        padding: 12mm 13.5mm;
+        padding: 12mm 14mm;
         background: #ffffff;
         color: #111111;
         font-family: "CVCharter", "Charter", "Charter BT", "Bitstream Charter", "Times New Roman", serif;
-        font-size: 10.9pt;
-        line-height: 1.2;
+        font-size: 10.7pt;
+        line-height: 1.18;
         box-shadow: 0 7px 24px rgba(0, 0, 0, 0.12);
       }
 
@@ -81,15 +81,20 @@
 
       .cv-meta-row {
         margin: 3px 0 0;
-        font-size: 10pt;
+        font-size: 9.9pt;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 7px 10px;
       }
 
+      .cv-meta-row > * + *::before {
+        content: "|";
+        margin-right: 10px;
+      }
+
       .section {
-        margin-top: 7px;
+        margin-top: 8px;
       }
 
       .section-heading {
@@ -101,7 +106,7 @@
 
       .section-title {
         margin: 0;
-        font-size: 18.2pt;
+        font-size: 14.6pt;
         line-height: 1;
         font-weight: 700;
         white-space: nowrap;
@@ -109,16 +114,16 @@
 
       .section-rule {
         height: 1px;
-        border-top: 1px solid #333333;
+        border-top: 0.9px solid #333333;
         flex: 1;
       }
 
       .summary p {
-        margin: 0 0 2px;
+        margin: 0 0 2.2px;
       }
 
       .entry {
-        margin-bottom: 4px;
+        margin-bottom: 4.8px;
         break-inside: avoid;
         page-break-inside: avoid;
       }
@@ -136,19 +141,19 @@
 
       .entry-title {
         margin: 0;
-        font-size: 11pt;
+        font-size: 10.9pt;
         font-weight: 700;
       }
 
       .entry-time {
         margin: 0;
-        font-size: 10pt;
+        font-size: 9.8pt;
         white-space: nowrap;
       }
 
       .entry-subtitle {
         margin: 0;
-        font-size: 10pt;
+        font-size: 9.9pt;
       }
 
       .bullet-list {
@@ -264,7 +269,7 @@
       {% if profile and profile.summary %}
         <section class="section summary">
           <div class="section-heading">
-            <h2 class="section-title">{{ profile.title | default: "Career Profile" }}</h2>
+            <h2 class="section-title">Career Profile</h2>
             <span class="section-rule"></span>
           </div>
           {% assign summary_lines = profile.summary | newline_to_br | split: "<br />" %}
@@ -280,7 +285,7 @@
       {% if data.experiences and data.experiences.info %}
         <section class="section">
           <div class="section-heading">
-            <h2 class="section-title">{{ data.experiences.title | default: "Experience" }}</h2>
+            <h2 class="section-title">Experience</h2>
             <span class="section-rule"></span>
           </div>
           {% for experience in data.experiences.info %}
@@ -318,7 +323,7 @@
       {% if data.education and data.education.info %}
         <section class="section">
           <div class="section-heading">
-            <h2 class="section-title">{{ data.education.title | default: "Education" }}</h2>
+            <h2 class="section-title">Education</h2>
             <span class="section-rule"></span>
           </div>
           {% for graduation in data.education.info %}
@@ -346,7 +351,7 @@
         {% if patent_items.size > 0 %}
           <section class="section">
             <div class="section-heading">
-              <h2 class="section-title">{{ data.patents.title | default: "Patents" }}</h2>
+              <h2 class="section-title">Patents</h2>
               <span class="section-rule"></span>
             </div>
             <ul class="compact-list">
