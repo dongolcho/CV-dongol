@@ -1,0 +1,414 @@
+---
+# Add "layout: compress" here to compress the html code
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body class="pdf-resume-body">
+    <style id="pdf-resume-styles">
+      .pdf-resume-root,
+      .pdf-resume-root * {
+        box-sizing: border-box;
+      }
+
+      body.pdf-resume-body {
+        margin: 0;
+        padding: 24px;
+        background: #edf1f5;
+      }
+
+      #pdf-resume {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 14mm 15mm;
+        background: #ffffff;
+        color: #111827;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 11.2pt;
+        line-height: 1.45;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.14);
+      }
+
+      #pdf-resume a {
+        color: #1d4ed8;
+        text-decoration: none;
+      }
+
+      #pdf-resume a:hover {
+        text-decoration: underline;
+      }
+
+      .pdf-header {
+        border-bottom: 2px solid #1f2937;
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+      }
+
+      .pdf-name {
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.05;
+        letter-spacing: 0.4px;
+      }
+
+      .pdf-tagline {
+        margin: 5px 0 0;
+        font-size: 12.8pt;
+        color: #334155;
+      }
+
+      .pdf-contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        margin-top: 10px;
+      }
+
+      .pdf-contact-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 8px;
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        font-size: 9.5pt;
+        color: #334155;
+      }
+
+      .pdf-section {
+        margin-top: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .pdf-section h2 {
+        margin: 0 0 8px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #dbe3ec;
+        font-size: 11.4pt;
+        letter-spacing: 1.1px;
+        text-transform: uppercase;
+        color: #1f2937;
+      }
+
+      .pdf-summary p {
+        margin: 0 0 5px;
+      }
+
+      .pdf-entry {
+        margin-bottom: 9px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .pdf-entry:last-child {
+        margin-bottom: 0;
+      }
+
+      .pdf-entry-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: baseline;
+      }
+
+      .pdf-entry-title {
+        margin: 0;
+        font-size: 11.2pt;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .pdf-entry-subtitle {
+        margin: 2px 0 0;
+        font-size: 10.1pt;
+        color: #475569;
+      }
+
+      .pdf-entry-time {
+        white-space: nowrap;
+        color: #475569;
+        font-size: 9.6pt;
+      }
+
+      .pdf-bullets {
+        margin: 5px 0 0;
+        padding-left: 16px;
+      }
+
+      .pdf-bullets li {
+        margin: 0 0 2px;
+      }
+
+      .pdf-entry-meta {
+        margin-top: 3px;
+        color: #475569;
+        font-size: 9.6pt;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+      }
+
+      .pdf-chip-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pdf-chip-list li {
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        padding: 2px 9px;
+        font-size: 9.4pt;
+      }
+
+      .pdf-inline-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pdf-inline-list li {
+        margin-bottom: 3px;
+      }
+
+      .pdf-inline-list li:last-child {
+        margin-bottom: 0;
+      }
+
+      .pdf-columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      @media (max-width: 900px) {
+        .pdf-columns {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+
+        body.pdf-resume-body {
+          background: #ffffff;
+          padding: 0;
+        }
+
+        #pdf-resume {
+          width: auto;
+          min-height: auto;
+          margin: 0;
+          padding: 12mm 14mm;
+          box-shadow: none;
+        }
+      }
+    </style>
+
+    {% assign data = site.data.data %}
+    {% assign sidebar = data.sidebar %}
+    {% assign profile = data["career-profile"] %}
+    {% assign website_href = sidebar.website | default: "" | strip %}
+    {% if website_href != "" %}
+      {% unless website_href contains "://" %}
+        {% assign website_href = "https://" | append: website_href %}
+      {% endunless %}
+    {% endif %}
+
+    <main id="pdf-resume" class="pdf-resume-root">
+      <header class="pdf-header">
+        <h1 class="pdf-name">{{ sidebar.name }}</h1>
+        {% if sidebar.tagline and sidebar.tagline != "" %}
+          <p class="pdf-tagline">{{ sidebar.tagline }}</p>
+        {% endif %}
+        <div class="pdf-contact">
+          {% if sidebar.email and sidebar.email != "" %}
+            <span class="pdf-contact-item">{{ sidebar.email }}</span>
+          {% endif %}
+          {% if sidebar.phone and sidebar.phone != "" %}
+            <span class="pdf-contact-item">{{ sidebar.phone }}</span>
+          {% endif %}
+          {% if sidebar.timezone and sidebar.timezone != "" %}
+            <span class="pdf-contact-item">{{ sidebar.timezone }}</span>
+          {% endif %}
+          {% if website_href != "" %}
+            <a class="pdf-contact-item" href="{{ website_href }}" target="_blank" rel="noopener noreferrer">
+              {{ website_href | replace: "https://", "" | replace: "http://", "" }}
+            </a>
+          {% endif %}
+          {% if sidebar.linkedin and sidebar.linkedin != "" %}
+            <a class="pdf-contact-item" href="https://linkedin.com/in/{{ sidebar.linkedin }}" target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/{{ sidebar.linkedin }}
+            </a>
+          {% endif %}
+          {% if sidebar.github and sidebar.github != "" %}
+            <a class="pdf-contact-item" href="https://github.com/{{ sidebar.github }}" target="_blank" rel="noopener noreferrer">
+              github.com/{{ sidebar.github }}
+            </a>
+          {% endif %}
+        </div>
+      </header>
+
+      {% if profile and profile.summary %}
+        <section class="pdf-section pdf-summary">
+          <h2>{{ profile.title | default: "Summary" }}</h2>
+          {% assign summary_lines = profile.summary | newline_to_br | split: "<br />" %}
+          {% for raw_line in summary_lines %}
+            {% assign line = raw_line | strip %}
+            {% if line != "" %}
+              <p>{{ line }}</p>
+            {% endif %}
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      {% if data.experiences and data.experiences.info %}
+        <section class="pdf-section">
+          <h2>{{ data.experiences.title | default: "Experience" }}</h2>
+          {% for experience in data.experiences.info %}
+            {% assign role = experience.role | default: "" | strip %}
+            {% assign company = experience.company | default: "" | strip %}
+            {% assign time = experience.time | default: "" | strip %}
+            {% if role != "" or company != "" or time != "" %}
+              <article class="pdf-entry">
+                <div class="pdf-entry-head">
+                  <div>
+                    {% if role != "" %}
+                      <h3 class="pdf-entry-title">{{ role }}</h3>
+                    {% endif %}
+                    {% if company != "" %}
+                      <p class="pdf-entry-subtitle">{{ company }}</p>
+                    {% endif %}
+                  </div>
+                  {% if time != "" %}
+                    <div class="pdf-entry-time">{{ time }}</div>
+                  {% endif %}
+                </div>
+
+                {% if experience.details %}
+                  {% assign detail_lines = experience.details | newline_to_br | split: "<br />" %}
+                  <ul class="pdf-bullets">
+                    {% for raw_detail in detail_lines %}
+                      {% assign detail = raw_detail | strip %}
+                      {% if detail != "" %}
+                        <li>{{ detail | remove_first: "- " }}</li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      {% if data.education and data.education.info %}
+        <section class="pdf-section">
+          <h2>{{ data.education.title | default: "Education" }}</h2>
+          {% for graduation in data.education.info %}
+            {% assign degree = graduation.degree | default: "" | strip %}
+            {% assign university = graduation.university | default: "" | strip %}
+            {% assign time = graduation.time | default: "" | strip %}
+            {% if degree != "" or university != "" or time != "" %}
+              <article class="pdf-entry">
+                <div class="pdf-entry-head">
+                  <div>
+                    {% if degree != "" %}
+                      <h3 class="pdf-entry-title">{{ degree }}</h3>
+                    {% endif %}
+                    {% if university != "" %}
+                      <p class="pdf-entry-subtitle">{{ university }}</p>
+                    {% endif %}
+                  </div>
+                  {% if time != "" %}
+                    <div class="pdf-entry-time">{{ time }}</div>
+                  {% endif %}
+                </div>
+              </article>
+            {% endif %}
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      {% if data.patents and data.patents.items %}
+        {% assign patent_items = data.patents.items | where_exp: "patent", "patent.title != ''" %}
+        {% if patent_items.size > 0 %}
+          <section class="pdf-section">
+            <h2>{{ data.patents.title | default: "Patents" }}</h2>
+            {% for patent in patent_items %}
+              <article class="pdf-entry">
+                <h3 class="pdf-entry-title">{{ patent.title }}</h3>
+                <div class="pdf-entry-meta">
+                  {% if patent.status and patent.status != "" %}
+                    <span>{{ patent.status }}</span>
+                  {% endif %}
+                  {% if patent["Patent Number"] and patent["Patent Number"] != "" %}
+                    <span>Patent No. {{ patent["Patent Number"] }}</span>
+                  {% endif %}
+                  {% if patent["Registration Date"] and patent["Registration Date"] != "" %}
+                    <span>{{ patent["Registration Date"] }}</span>
+                  {% endif %}
+                </div>
+              </article>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endif %}
+
+      <section class="pdf-section pdf-columns">
+        {% if data.skills and data.skills.toolset %}
+          <div>
+            <h2>{{ data.skills.title | default: "Skills" }}</h2>
+            <ul class="pdf-chip-list">
+              {% for skill in data.skills.toolset %}
+                {% assign skill_name = skill.name | default: "" | strip %}
+                {% if skill_name != "" %}
+                  <li>{{ skill_name }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <div>
+          {% if sidebar.languages and sidebar.languages.info %}
+            <h2>{{ sidebar.languages.title | default: "Languages" }}</h2>
+            <ul class="pdf-inline-list">
+              {% for language in sidebar.languages.info %}
+                {% assign idiom = language.idiom | default: "" | strip %}
+                {% assign level = language.level | default: "" | strip %}
+                {% if idiom != "" %}
+                  <li>
+                    <strong>{{ idiom }}</strong>{% if level != "" %} - {{ level }}{% endif %}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% if sidebar.interests and sidebar.interests.info %}
+            {% assign interest_items = sidebar.interests.info | where_exp: "interest", "interest.item != ''" %}
+            {% if interest_items.size > 0 %}
+              <h2 style="margin-top: 10px;">{{ sidebar.interests.title | default: "Interests" }}</h2>
+              <ul class="pdf-inline-list">
+                {% for interest in interest_items %}
+                  <li>{{ interest.item }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endif %}
+        </div>
+      </section>
+    </main>
+
+    {% include scripts.html %}
+  </body>
+</html>

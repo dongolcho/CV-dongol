@@ -1,5 +1,5 @@
 function print() {
-  const printWindow = window.open("/print", "_blank");
+  const printWindow = window.open(new URL("resume-pdf", window.location.href).href, "_blank");
   printWindow.onload = function () {
     printWindow.print();
     // Close the print window after a delay
@@ -7,33 +7,67 @@ function print() {
   };
 }
 
-function generatePDF() {
-  // Get the print layout URL
-  const printURL = new URL("print", window.location.href).href;
+function createPdfRenderContainer(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const resumeNode = doc.querySelector("#pdf-resume");
 
-  // Fetch the print layout content
-  fetch(printURL)
+  if (!resumeNode) {
+    throw new Error("PDF template root (#pdf-resume) was not found.");
+  }
+
+  const styleNode = doc.querySelector("#pdf-resume-styles");
+  const container = document.createElement("div");
+  container.id = "pdf-render-container";
+  container.style.position = "fixed";
+  container.style.left = "-10000px";
+  container.style.top = "0";
+  container.style.width = "210mm";
+  container.style.zIndex = "-1";
+  container.style.backgroundColor = "#ffffff";
+
+  if (styleNode) {
+    container.appendChild(styleNode.cloneNode(true));
+  }
+  container.appendChild(resumeNode.cloneNode(true));
+
+  document.body.appendChild(container);
+  return container;
+}
+
+function generatePDF() {
+  const templateURL = new URL("resume-pdf", window.location.href).href;
+  const pdfButton = document.getElementById("pdfButton");
+
+  if (pdfButton) {
+    pdfButton.disabled = true;
+  }
+
+  fetch(templateURL)
     .then((response) => response.text())
     .then((html) => {
-      // Create a temporary container
-      const container = document.createElement("div");
-      container.innerHTML = html;
+      const container = createPdfRenderContainer(html);
+      const resume = container.querySelector("#pdf-resume");
 
       // Get name from the DOM (as defined in data.yml)
-      const name = document.querySelector(".name").textContent;
+      const nameNode = document.querySelector(".name");
+      const name = nameNode ? nameNode.textContent : "Resume";
       // Format filename: replace spaces with underscores and append _resume.pdf
       const filename = `${name.replace(/\s+/g, "_")}_Resume.pdf`;
 
       // Configure pdf options
       const opt = {
-        margin: 10,
+        margin: [0, 0, 0, 0],
         filename: filename,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
           scale: 2,
           useCORS: true,
           letterRendering: true,
+          backgroundColor: "#ffffff",
+          windowWidth: 794,
         },
+        pagebreak: { mode: ["css", "legacy"] },
         jsPDF: {
           unit: "mm",
           format: "a4",
@@ -44,11 +78,19 @@ function generatePDF() {
       // Generate PDF
       html2pdf()
         .set(opt)
-        .from(container)
+        .from(resume)
         .save()
-        .catch((err) => console.error("Error generating PDF:", err));
+        .catch((err) => console.error("Error generating PDF:", err))
+        .finally(() => {
+          container.remove();
+        });
     })
-    .catch((err) => console.error("Error fetching print layout:", err));
+    .catch((err) => console.error("Error fetching print layout:", err))
+    .finally(() => {
+      if (pdfButton) {
+        pdfButton.disabled = false;
+      }
+    });
 }
 
 function decodeHtmlEntities(value) {
