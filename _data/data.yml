@@ -56,6 +56,7 @@ career-profile:
   title: Career Profile
   summary: |
     EDA software engineer building and optimizing production analysis flows in C++11.
+    Currently working at [BAUM Design Systems, Korea](https://www.baum-ds.com/).
     Focus areas include power analysis, EDA workflows, and low-power design methodologies.
 
 education:
@@ -110,6 +111,8 @@ skills:
   - name: C++ (OOP, Optimization, GTEST, valgrind, GDB)
     level: 95%
   - name: Problem solving & Communication
+    level: 80%
+  - name: Technical Writing
     level: 80%
   - name: Graphical User Interface (Qt, Qtest with C++)
     level: 60%
