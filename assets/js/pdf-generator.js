@@ -1,3 +1,6 @@
+const HTML2PDF_CDN_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+
 function print() {
   const printWindow = window.open(new URL("resume-pdf", window.location.href).href, "_blank");
   printWindow.onload = function () {
@@ -5,6 +8,75 @@ function print() {
     // Close the print window after a delay
     setTimeout(() => printWindow.close(), 500);
   };
+}
+
+function enableButton(button) {
+  if (button) {
+    button.disabled = false;
+  }
+}
+
+function getLocalHtml2PdfUrl() {
+  const generatorScript = document.querySelector('script[src*="assets/js/pdf-generator.js"]');
+  if (generatorScript && generatorScript.src) {
+    return new URL("../vendor/html2pdf.bundle.min.js", generatorScript.src).href;
+  }
+  return new URL("assets/vendor/html2pdf.bundle.min.js", window.location.href).href;
+}
+
+function loadScriptInWindow(targetWindow, src) {
+  return new Promise((resolve, reject) => {
+    if (targetWindow.html2pdf) {
+      resolve(true);
+      return;
+    }
+
+    const doc = targetWindow.document;
+    const existingScript = Array.from(doc.scripts).find((script) => script.src === src);
+    if (existingScript) {
+      existingScript.addEventListener("load", () => resolve(true), { once: true });
+      existingScript.addEventListener(
+        "error",
+        () => reject(new Error(`Failed to load ${src}`)),
+        { once: true }
+      );
+      return;
+    }
+
+    const script = doc.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+
+    const mountTarget = doc.head || doc.documentElement;
+    if (!mountTarget) {
+      reject(new Error("Unable to locate a script mount target"));
+      return;
+    }
+
+    mountTarget.appendChild(script);
+  });
+}
+
+async function ensureHtml2Pdf(targetWindow) {
+  if (targetWindow.html2pdf) {
+    return true;
+  }
+
+  const sources = [getLocalHtml2PdfUrl(), HTML2PDF_CDN_URL];
+  for (const src of sources) {
+    try {
+      await loadScriptInWindow(targetWindow, src);
+    } catch (error) {
+      console.warn("Unable to load html2pdf script:", src, error);
+    }
+
+    if (targetWindow.html2pdf) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function generatePDF() {
@@ -19,22 +91,18 @@ function generatePDF() {
 
   if (!pdfWindow) {
     console.error("Popup blocked. Please allow popups to export PDF.");
-    if (pdfButton) {
-      pdfButton.disabled = false;
-    }
+    enableButton(pdfButton);
     return;
   }
 
   pdfWindow.addEventListener(
     "load",
-    () => {
+    async () => {
       const resume = pdfWindow.document.querySelector("#pdf-resume");
-      if (!resume || !pdfWindow.html2pdf) {
+      const hasHtml2Pdf = await ensureHtml2Pdf(pdfWindow);
+      if (!resume || !hasHtml2Pdf) {
         console.error("PDF template did not load correctly.");
-        if (pdfButton) {
-          pdfButton.disabled = false;
-        }
-        setTimeout(() => pdfWindow.close(), 500);
+        enableButton(pdfButton);
         return;
       }
 
@@ -65,18 +133,14 @@ function generatePDF() {
         },
       };
 
-      pdfWindow
-        .html2pdf()
-        .set(opt)
-        .from(resume)
-        .save()
-        .catch((err) => console.error("Error generating PDF:", err))
-        .finally(() => {
-          if (pdfButton) {
-            pdfButton.disabled = false;
-          }
-          setTimeout(() => pdfWindow.close(), 800);
-        });
+      try {
+        await pdfWindow.html2pdf().set(opt).from(resume).save();
+        setTimeout(() => pdfWindow.close(), 800);
+      } catch (err) {
+        console.error("Error generating PDF:", err);
+      } finally {
+        enableButton(pdfButton);
+      }
     },
     { once: true }
   );
