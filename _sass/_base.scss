@@ -36,7 +36,8 @@ p {
 .wrapper {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  background: $theme-color;
+  background: #fff;
+  border: 1px solid #000;
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
@@ -46,17 +47,18 @@ p {
 .sidebar-wrapper {
   grid-column: span 3;
   order: $sidebar-order;
-  background: $theme-color;
-  color: #fff;
+  background: #fff;
+  border-left: 1px solid #000;
+  color: #000;
   a {
-    color: #fff;
+    color: #000;
   }
   .profile-container {
     padding: 30px;
-    //background: darken($theme-color, 10%);
-    background: rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-bottom: 1px solid #000;
     text-align: center;
-    color: #fff;
+    color: #000;
   }
   .name {
     font-size: 32px;
@@ -65,7 +67,7 @@ p {
     margin-bottom: 10px;
   }
   .tagline {
-    color: rgba(256, 256, 256, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
     font-weight: 400;
     margin-top: 0;
@@ -79,7 +81,7 @@ p {
     //used for profile image
     max-width: 100px;
     margin-bottom: 15px;
-    border: 0px solid #fff;
+    border: 1px solid #000;
     border-radius: 100%;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   }
@@ -122,20 +124,20 @@ p {
       }
     }
     .meta {
-      color: rgba(256, 256, 256, 0.6);
+      color: rgba(0, 0, 0, 0.7);
       font-weight: 500;
       margin-bottom: 0px;
       margin-top: 0;
     }
     .time {
-      color: rgba(256, 256, 256, 0.6);
+      color: rgba(0, 0, 0, 0.7);
       font-weight: 500;
       margin-bottom: 0px;
     }
   }
   .languages-container {
     .lang-desc {
-      color: rgba(256, 256, 256, 0.6);
+      color: rgba(0, 0, 0, 0.7);
     }
   }
 
