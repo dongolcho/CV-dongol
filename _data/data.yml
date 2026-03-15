@@ -4,7 +4,7 @@
 
 sidebar:
   position: right
-  about: True
+  about: False
   education: True
 
   # Profile information
