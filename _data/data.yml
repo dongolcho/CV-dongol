@@ -45,21 +45,18 @@ sidebar:
   interests:
     title: Interests
     info:
-    - item: Electrical Design Automation (EDA)
+    - item: Power analysis
       link:
-    - item: Low power design
+    - item: EDA workflows
       link:
-    - item: Performance engineering (runtime/memory)
-      link:
-    - item:
+    - item: Low-power design methodologies
       link:
 
 career-profile:
   title: Career Profile
   summary: |
     EDA software engineer building and optimizing production analysis flows in C++11.
-    Focus areas include power analysis, runtime/memory performance, maintainable architecture, and
-    debugging/testing.
+    Focus areas include power analysis, EDA workflows, and low-power design methodologies.
 
 education:
   title: Education
