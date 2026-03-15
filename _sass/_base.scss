@@ -283,7 +283,7 @@ p {
   }
   .level-bar-inner {
     height: 12px;
-    background: lighten($theme-color, 15%);
+    background: #1F4E79;
   }
 }
 
@@ -305,8 +305,8 @@ p {
   top: 20px;
   right: 130px; // Changed from 20px to make space for the PDF and Markdown buttons
   z-index: 1000;
-  background: $theme-color;
-  color: #fff;
+  background: #1F4E79;
+  color: #FFFFFF;
   padding: 8px 15px;
   border-radius: 4px;
   border: none;
@@ -316,7 +316,7 @@ p {
   transition: all 0.3s ease;
 
   &:hover {
-    background: darken($theme-color, 10%);
+    background: #163A5B;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
@@ -372,8 +372,8 @@ p {
   top: 20px;
   right: 250px;
   z-index: 1000;
-  background: $theme-color;
-  color: #fff;
+  background: #1F4E79;
+  color: #FFFFFF;
   padding: 8px 15px;
   border-radius: 4px;
   border: none;
@@ -383,7 +383,7 @@ p {
   transition: all 0.3s ease;
 
   &:hover {
-    background: darken($theme-color, 10%);
+    background: #163A5B;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
