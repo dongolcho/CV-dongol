@@ -64,49 +64,52 @@
 
       .cv-header {
         text-align: center;
-        margin-bottom: 8px;
+        margin-bottom: 7px;
       }
 
       .cv-name {
         margin: 0;
-        font-size: 30.5pt;
+        font-size: 29.5pt;
         line-height: 1;
         font-weight: 700;
       }
 
-      .cv-role {
-        margin: 5px 0 0;
-        font-size: 11.2pt;
-      }
-
-      .cv-meta-row {
-        margin: 3px 0 0;
+      .cv-contact-line {
+        margin: 2px 0 0;
         font-size: 9.9pt;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 7px 10px;
+        align-items: baseline;
       }
 
-      .cv-meta-row > * + *::before {
-        content: "|";
-        margin-right: 10px;
+      .cv-contact-line > * + *::before {
+        content: "♣";
+        margin: 0 9px;
+      }
+
+      .cv-contact-role {
+        font-weight: 400;
+      }
+
+      .cv-contact-links {
+        margin-top: 3px;
       }
 
       .section {
-        margin-top: 8px;
+        margin-top: 6px;
       }
 
       .section-heading {
         display: flex;
-        align-items: baseline;
-        gap: 8px;
-        margin-bottom: 3px;
+        align-items: flex-end;
+        gap: 7px;
+        margin-bottom: 2px;
       }
 
       .section-title {
         margin: 0;
-        font-size: 14.6pt;
+        font-size: 11.8pt;
         line-height: 1;
         font-weight: 700;
         white-space: nowrap;
@@ -114,16 +117,16 @@
 
       .section-rule {
         height: 1px;
-        border-top: 0.9px solid #333333;
+        border-top: 0.95px solid #323232;
         flex: 1;
       }
 
       .summary p {
-        margin: 0 0 2.2px;
+        margin: 0 0 1.2px;
       }
 
       .entry {
-        margin-bottom: 4.8px;
+        margin-bottom: 3.8px;
         break-inside: avoid;
         page-break-inside: avoid;
       }
@@ -141,28 +144,33 @@
 
       .entry-title {
         margin: 0;
-        font-size: 10.9pt;
-        font-weight: 700;
+        font-size: 10.5pt;
+        font-weight: 400;
       }
 
       .entry-time {
         margin: 0;
-        font-size: 9.8pt;
+        font-size: 10.1pt;
         white-space: nowrap;
       }
 
-      .entry-subtitle {
-        margin: 0;
-        font-size: 9.9pt;
+      .entry-role,
+      .entry-institution,
+      .entry-label-strong {
+        font-weight: 700;
       }
 
-      .bullet-list {
-        margin: 1px 0 0 17px;
+      .entry-details p {
+        margin: 0 0 1px;
+      }
+
+      .entry-details ul {
+        margin: 0.5px 0 0 17px;
         padding: 0;
       }
 
-      .bullet-list li {
-        margin: 0 0 1px;
+      .entry-details li {
+        margin: 0 0 0.5px;
       }
 
       .compact-list {
@@ -191,7 +199,7 @@
       }
 
       .muted {
-        color: #222222;
+        color: #111111;
       }
 
       @media print {
@@ -228,42 +236,53 @@
     <main id="pdf-resume" class="pdf-resume-root">
       <header class="cv-header">
         <h1 class="cv-name">{{ sidebar.name }}</h1>
-        {% if sidebar.tagline and sidebar.tagline != "" %}
-          <p class="cv-role">{{ sidebar.tagline }}</p>
+        {% assign has_header_contact = false %}
+        {% if sidebar.tagline and sidebar.tagline != "" %}{% assign has_header_contact = true %}{% endif %}
+        {% if sidebar.email and sidebar.email != "" %}{% assign has_header_contact = true %}{% endif %}
+        {% if sidebar.phone and sidebar.phone != "" %}{% assign has_header_contact = true %}{% endif %}
+        {% if sidebar.timezone and sidebar.timezone != "" %}{% assign has_header_contact = true %}{% endif %}
+        {% if has_header_contact %}
+          <div class="cv-contact-line">
+            {% if sidebar.tagline and sidebar.tagline != "" %}
+              <span class="cv-contact-role">{{ sidebar.tagline }}</span>
+            {% endif %}
+            {% if sidebar.email and sidebar.email != "" %}
+              <span>{{ sidebar.email }}</span>
+            {% endif %}
+            {% if sidebar.phone and sidebar.phone != "" %}
+              <span>{{ sidebar.phone }}</span>
+            {% endif %}
+            {% if sidebar.timezone and sidebar.timezone != "" %}
+              <span>{{ sidebar.timezone }}</span>
+            {% endif %}
+          </div>
         {% endif %}
 
-        <div class="cv-meta-row">
-          {% if sidebar.email and sidebar.email != "" %}
-            <span>{{ sidebar.email }}</span>
-          {% endif %}
-          {% if sidebar.phone and sidebar.phone != "" %}
-            <span>{{ sidebar.phone }}</span>
-          {% endif %}
-          {% if sidebar.timezone and sidebar.timezone != "" %}
-            <span>{{ sidebar.timezone }}</span>
-          {% endif %}
-        </div>
-
         {% if website_href != "" %}
-          <div class="cv-meta-row">
+          <div class="cv-contact-line">
             <a href="{{ website_href }}" target="_blank" rel="noopener noreferrer">
               {{ website_href | replace: "https://", "" | replace: "http://", "" }}
             </a>
           </div>
         {% endif %}
 
-        <div class="cv-meta-row">
-          {% if sidebar.linkedin and sidebar.linkedin != "" %}
-            <a href="https://linkedin.com/in/{{ sidebar.linkedin }}" target="_blank" rel="noopener noreferrer">
-              linkedin.com/in/{{ sidebar.linkedin }}
-            </a>
-          {% endif %}
-          {% if sidebar.github and sidebar.github != "" %}
-            <a href="https://github.com/{{ sidebar.github }}" target="_blank" rel="noopener noreferrer">
-              github.com/{{ sidebar.github }}
-            </a>
-          {% endif %}
-        </div>
+        {% assign has_profile_link = false %}
+        {% if sidebar.linkedin and sidebar.linkedin != "" %}{% assign has_profile_link = true %}{% endif %}
+        {% if sidebar.github and sidebar.github != "" %}{% assign has_profile_link = true %}{% endif %}
+        {% if has_profile_link %}
+          <div class="cv-contact-line cv-contact-links">
+            {% if sidebar.linkedin and sidebar.linkedin != "" %}
+              <a href="https://linkedin.com/in/{{ sidebar.linkedin }}" target="_blank" rel="noopener noreferrer">
+                linkedin.com/in/{{ sidebar.linkedin }}
+              </a>
+            {% endif %}
+            {% if sidebar.github and sidebar.github != "" %}
+              <a href="https://github.com/{{ sidebar.github }}" target="_blank" rel="noopener noreferrer">
+                github.com/{{ sidebar.github }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
       </header>
 
       {% if profile and profile.summary %}
@@ -272,13 +291,7 @@
             <h2 class="section-title">Career Profile</h2>
             <span class="section-rule"></span>
           </div>
-          {% assign summary_lines = profile.summary | newline_to_br | split: "<br />" %}
-          {% for raw_line in summary_lines %}
-            {% assign line = raw_line | strip %}
-            {% if line != "" %}
-              <p>{{ line }}</p>
-            {% endif %}
-          {% endfor %}
+          {{ profile.summary | markdownify }}
         </section>
       {% endif %}
 
@@ -296,7 +309,7 @@
               <article class="entry">
                 <div class="entry-head">
                   <h3 class="entry-title">
-                    {% if role != "" %}{{ role }}{% endif %}{% if role != "" and company != "" %}, {% endif %}{% if company != "" %}<span class="muted">{{ company }}</span>{% endif %}
+                    {% if role != "" %}<span class="entry-role">{{ role }}</span>{% endif %}{% if role != "" and company != "" %}, {% endif %}{% if company != "" %}<span class="muted">{{ company }}</span>{% endif %}
                   </h3>
                   {% if time != "" %}
                     <p class="entry-time">{{ time }}</p>
@@ -304,15 +317,9 @@
                 </div>
 
                 {% if experience.details %}
-                  {% assign detail_lines = experience.details | newline_to_br | split: "<br />" %}
-                  <ul class="bullet-list">
-                    {% for raw_detail in detail_lines %}
-                      {% assign detail = raw_detail | strip %}
-                      {% if detail != "" %}
-                        <li>{{ detail | remove_first: "- " }}</li>
-                      {% endif %}
-                    {% endfor %}
-                  </ul>
+                  <div class="entry-details">
+                    {{ experience.details | markdownify }}
+                  </div>
                 {% endif %}
               </article>
             {% endif %}
@@ -334,7 +341,7 @@
               <article class="entry">
                 <div class="entry-head">
                   <h3 class="entry-title">
-                    {% if university != "" %}{{ university }}{% endif %}{% if university != "" and degree != "" %}, {% endif %}{% if degree != "" %}<span class="muted">{{ degree }}</span>{% endif %}
+                    {% if university != "" %}<span class="entry-institution">{{ university }}</span>{% endif %}{% if university != "" and degree != "" %}, {% endif %}{% if degree != "" %}<span class="muted">{{ degree }}</span>{% endif %}
                   </h3>
                   {% if time != "" %}
                     <p class="entry-time">{{ time }}</p>
@@ -357,7 +364,7 @@
             <ul class="compact-list">
               {% for patent in patent_items %}
                 <li>
-                  <span class="entry-title">{{ patent.title }}</span>
+                  <span class="entry-label-strong">{{ patent.title }}</span>
                   <span class="muted">
                     {% if patent.status and patent.status != "" %}{{ patent.status }}{% endif %}
                     {% if patent["Patent Number"] and patent["Patent Number"] != "" %}{% if patent.status and patent.status != "" %} | {% endif %}Patent No. {{ patent["Patent Number"] }}{% endif %}
