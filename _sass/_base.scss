@@ -180,6 +180,15 @@ p {
     margin-bottom: 60px;
   }
 
+  .summary {
+    a {
+      color: $text-color-secondary;
+      &:hover {
+        color: $text-color;
+      }
+    }
+  }
+
   .experiences-section,
   .recommendations-section,
   .educations-section {
