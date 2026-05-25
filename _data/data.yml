@@ -54,8 +54,8 @@ career-profile:
   title: Career Profile
   summary: |
     R&D Software Engineer at BAUM Design Systems, developing advanced Power Analysis EDA tools
-    • Main expertise: VLSI design flow, gate-level power simulation
-    • Core capabilities: High-performance C++ programming, structural refactoring, and test automation
+    - Main expertise: VLSI design flow, gate-level power simulation
+    - Core capabilities: High-performance C++ programming, structural refactoring, and test automation
 
 education:
   title: Education
