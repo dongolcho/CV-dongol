@@ -45,18 +45,17 @@ sidebar:
   interests:
     title: Interests
     info:
-    - item: Power analysis
-      link:
-    - item: EDA workflows
-      link:
     - item: Low-power design methodologies
+      link:
+    - item: EDA for DTCO
       link:
 
 career-profile:
   title: Career Profile
   summary: |
-    EDA software engineer working at [BAUM Design Systems, Korea](https://www.baum-ds.com/).
-    Focus areas include power analysis, EDA workflows, and low-power design methodologies.
+    R&D Software Engineer at BAUM Design Systems, developing advanced Power Analysis EDA tools
+    • Main expertise: VLSI design flow, gate-level power simulation
+    • Core capabilities: High-performance C++ programming, structural refactoring, and test automation
 
 education:
   title: Education
